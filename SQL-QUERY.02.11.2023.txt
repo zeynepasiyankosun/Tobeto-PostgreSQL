@@ -1,0 +1,138 @@
+-- 1. soru
+
+SELECT product_name ,quantity_per_unit
+from products;
+
+-- 2. soru
+SELECT product_id, product_name
+FROM products
+WHERE Discontinued=0
+
+-- 3. soru
+Select product_id ,product_name
+from products
+Where Discontinued = 1
+
+-- 4. soru 
+Select product_id, product_name , unit_price
+from products
+WHERE unit_price <20
+
+-- 5. soru
+Select product_id, product_name , unit_price
+from products
+WHERE unit_price BETWEEN 15 AND 25;
+
+-- 6. soru
+
+Select product_name, units_on_order , units_in_stock
+from products
+WHERE units_in_stock < units_on_order
+
+-- 7. soru
+Select product_name
+From products
+Where LOWER(product_name) LIKE 'a%'
+
+-- 8. soru
+
+Select product_name
+From products
+Where LOWER(product_name) LIKE '%i'
+
+-- 9. soru
+Select product_name, unit_price, unit_price * 1.18 AS "unite_price_KDV"
+From products;
+
+-- 10. soru
+Select count (*)
+From products 
+where unit_price >30
+
+-- 11. soru
+Select Lower(product_name) AS lower_product_name,unit_price
+from products
+order by unit_price DESC;
+
+-- 12. soru 
+Select CONCAT(first_name, ' ' ,last_name) AS full_name
+From employees;
+
+-- 13. soru 
+Select COUNT (*)
+From suppliers
+Where REGION IS NULL
+
+-- 14. soru
+Select COUNT (*)
+From suppliers
+Where Region IS NOT NULL;
+
+-- 15. soru 
+Select Concat ('TR', UPPER(product_name)) AS TRPRODUCTNAME
+From products;
+
+-- 16. soru
+Select Concat ('TR', UPPER(product_name)) AS TRPRODUCTNAME
+from products 
+where unit_price <20;
+
+-- 17. SORU
+Select product_name, unit_price
+from products
+ORDER BY unit_price DESC
+LIMIT 1;
+
+-- 18. SORU
+Select  product_name, unit_price
+from products
+ORDER BY unit_price DESC
+LIMIT 10;
+
+-- 19. SORU
+Select product_name , unit_price
+From products
+Where unit_price > (Select AVG(unit_price)from products);
+
+-- 20. SORU
+
+SELECT SUM(units_in_stock * unit_price) AS total
+FROM products
+
+-- 21. soru
+Select COUNT(*) AS mevcutOlan
+from products
+Where Discontinued =0;
+
+Select COUNT(*) AS mevcutOlmayan
+from products
+Where Discontinued =1;
+
+-- 22. soru
+Select p.product_name, c.category_name
+From products p
+JOIN categories c ON p.category_id = c.category_id;
+
+-- 23. soru
+Select c.category_name, AVG(p.unit_price)
+from products p
+JOIN categories c ON p.category_id = c.category_id
+GROUP BY c.category_name
+
+-- 24. soru
+Select p.product_name, p.unit_price, c.category_name
+from products p
+join categories c ON p.category_id = c.category_id
+ORDER BY p.unit_price DESC 
+LIMIT 1;
+
+-- 25. soru
+SELECT   p.product_name,   c.category_name,   s.company_name, 
+SUM(od.quantity) AS toplamsatılan
+FROM   order_details od 
+JOIN   products p ON od.product_id = p.product_id
+JOIN   categories c ON p.category_id = c.category_id
+JOIN   suppliers s ON p.supplier_id = s.supplier_id
+GROUP BY   p.product_name, c.category_name, s.company_name
+ORDER BY   toplamsatılan DESC 
+LIMIT 1;
